@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <form id="loginForm" method="POST">
+        <input type="text" id="name" placeholder="用户名">
+        <input type="password" id="password" placeholder="密码">
+        <button type="button" onclick="login()">登录</button>
+    </form>
+
+    <script>
+        function login() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://127.0.0.1:8000/login", true);
+            xhr.setRequestHeader("Content-Type", "application/json");z
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json.message);
+                }
+            };
+            var data = JSON.stringify({
+                "name": document.getElementById("name").value,
+                "password": document.getElementById("password").value
+            });
+            xhr.send(data);
+        }
+    </script>
+</body>
+</html>
